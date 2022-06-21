@@ -9,7 +9,7 @@ plugins {
 
 group = "eu.proszowski"
 version = "0.0.1-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_17
+java.sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
 	mavenCentral()
@@ -19,6 +19,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+	implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.3")
 	implementation("org.springframework.boot:spring-boot-starter-web:2.7.0")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
@@ -26,7 +27,7 @@ dependencies {
 tasks.withType<KotlinCompile> {
 	kotlinOptions {
 		freeCompilerArgs = listOf("-Xjsr305=strict")
-		jvmTarget = "17"
+		jvmTarget = "11"
 	}
 }
 

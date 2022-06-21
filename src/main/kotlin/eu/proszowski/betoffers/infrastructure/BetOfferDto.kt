@@ -1,51 +1,43 @@
 package eu.proszowski.betoffers.infrastructure
 
-data class BetOfferDto(
-    val betType: BetType,
-    val winLoseBetOffer: WinLoseBetOffer?,
-    val winDrawLoseBetOffer: WinDrawLoseBetOffer?,
-    val amountOfGoals: AmountOfGoalsBetOffer?
-)
+import com.fasterxml.jackson.annotation.JsonSubTypes
+import com.fasterxml.jackson.annotation.JsonTypeInfo
 
-enum class BetType {
-    WIN_LOSE,
-    WIN_DRAW_LOSE,
-    AMOUNT_OF_GOALS
-}
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "betType")
+@JsonSubTypes(
+    JsonSubTypes.Type(value = WinLoseBetOfferWrapper::class, name = "WIN_LOSE"),
+    JsonSubTypes.Type(value = WinDrawLoseBetOfferWrapper::class, name = "WIN_DRAW_LOSE"),
+    JsonSubTypes.Type(value = AmountOfGoalsBetOfferWrapper::class, name = "AMOUNT_OF_GOALS")
+)
+sealed class BetOfferDto
+
+data class WinLoseBetOfferWrapper(
+    val winLoseBetOffer: WinLoseBetOffer
+) : BetOfferDto()
 
 data class WinLoseBetOffer(
     val homeTeamWins: Odds,
     val awayTeamWins: Odds
-) {
-    companion object {
-        fun from(betOffer: BetOfferDto): WinLoseBetOffer {
-            TODO("Do mapping and return WinLoseBetOffer")
-        }
-    }
-}
+)
+
+data class WinDrawLoseBetOfferWrapper(
+    val winDrawLoseBetOffer: WinDrawLoseBetOffer
+) : BetOfferDto()
 
 data class WinDrawLoseBetOffer(
     val homeTeamWins: Odds,
     val draw: Odds,
     val awayTeamWins: Odds
-) {
-    companion object {
-        fun from(betOffer: BetOfferDto): WinDrawLoseBetOffer {
-            TODO("Do mapping and return WinDrawLoseBetOffer")
-        }
-    }
-}
+)
+
+data class AmountOfGoalsBetOfferWrapper(
+    val amountOfGoalsBetOffer: AmountOfGoalsBetOffer
+) : BetOfferDto()
 
 data class AmountOfGoalsBetOffer(
     val moreThan: List<GoalsAmountWithOdds>,
     val lessThan: List<GoalsAmountWithOdds>
-) {
-    companion object {
-        fun from(betOffer: BetOfferDto): AmountOfGoalsBetOffer {
-            TODO("Do mapping and return AmountOfGoalsBetOffer")
-        }
-    }
-}
+)
 
 data class GoalsAmountWithOdds(
     val amount: String,
