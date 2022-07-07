@@ -8,11 +8,12 @@ import org.springframework.web.bind.annotation.RestController
 class BetOffersRestApi {
 
     @PostMapping("/bet-offers")
-    fun addBetOffer(@RequestBody betOffer: BetOfferDto) {
+    fun addBetOffer(@RequestBody betOffer: BetOfferDto?) {
         when (betOffer) {
-            is WinLoseBetOfferWrapper -> TODO("do some actions")
-            is WinDrawLoseBetOfferWrapper -> TODO("do another action")
-            is AmountOfGoalsBetOfferWrapper -> TODO("and another action")
+            is WinLoseBetOfferWrapper -> TODO("WinLoseBetOfferWrapper")
+            is WinDrawLoseBetOfferWrapper -> TODO("WinDrawLoseBetOfferWrapper")
+            is AmountOfGoalsBetOfferWrapper -> TODO("AmountOfGoalsBetOfferWrapper")
+            null -> TODO("null")
         }
     }
 }
